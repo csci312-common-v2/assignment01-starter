@@ -153,6 +153,19 @@ describe("Test intervalTime", () => {
     expect(setTimeout.mock.calls[1][1]).toBe(2000);
   });
 
+  test("intervalTime: function is repeatable", () => {
+    const alarm = pa1.intervalAlarm([1.3, 0.7]);
+
+    expect(setTimeout).toHaveBeenCalledTimes(0);
+    alarm();
+    alarm();
+    expect(setTimeout).toHaveBeenCalledTimes(4);
+    expect(setTimeout.mock.calls[0][1]).toBe(1300);
+    expect(setTimeout.mock.calls[1][1]).toBe(2000);
+    expect(setTimeout.mock.calls[2][1]).toBe(1300);
+    expect(setTimeout.mock.calls[3][1]).toBe(2000);
+  });
+
   test('intervalTime: prints expected format', () => {
     const log = jest.spyOn(global.console, 'log');
     const alarm = pa1.intervalAlarm([1.3]);
